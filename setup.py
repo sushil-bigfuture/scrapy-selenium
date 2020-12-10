@@ -1,34 +1,19 @@
-"""This module contains the packaging routine for the pybook package"""
+import setuptools
 
-from setuptools import setup, find_packages
-try:
-    from pip.download import PipSession
-    from pip.req import parse_requirements
-except ImportError:
-    # It is quick hack to support pip 10 that has changed its internal
-    # structure of the modules.
-    from pip._internal.download import PipSession
-    from pip._internal.req.req_file import parse_requirements
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
-
-def get_requirements(source):
-    """Get the requirements from the given ``source``
-
-    Parameters
-    ----------
-    source: str
-        The filename containing the requirements
-
-    """
-
-    install_reqs = parse_requirements(filename=source, session=PipSession())
-
-    return [str(ir.req) for ir in install_reqs]
-
-
-setup(
-    packages=find_packages(),
-    install_requires=get_requirements('requirements/requirements.txt')
+setuptools.setup(
+    author="Sushil",
+    author_email="sushil@bigfuture.com.au",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires='>=3.6',
+    install_requires=['scrapy', 'selenium']
 )
-
-
